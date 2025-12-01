@@ -23,10 +23,29 @@ Snap Camera Kit for Webを使用したAR体験アプリケーションです。�
 
 *画像をクリックするとYouTubeで動画を再生できます（音声付き）*
 
-### スクリーンショット
+## クイックスタート
 
-<!-- スクリーンショットを追加する場合はここに配置 -->
-<!-- ![Screenshot 1](./docs/assets/screenshot1.png) -->
+1. **リポジトリをクローン**
+   ```bash
+   git clone https://github.com/ykassy/SnapCamerakitForWebUI.git
+   cd SnapCamerakitForWebUI
+   ```
+
+2. **依存関係をインストール**
+   ```bash
+   npm install
+   ```
+
+3. **設定ファイルを編集**
+   - `src/settings.js` を開いて、API TokenとLens IDを設定
+
+4. **開発サーバーを起動**
+   ```bash
+   npm run serve
+   ```
+
+5. **ブラウザでアクセス**
+   - `http://localhost:9000` にアクセス
 
 ## 技術スタック
 
@@ -35,20 +54,30 @@ Snap Camera Kit for Webを使用したAR体験アプリケーションです。�
 - **Vanilla JavaScript** - フレームワークなしのシンプルな実装
 - **CSS3** - モダンなUIデザイン
 
+## 前提条件
+
+- **Node.js** v14以上
+- **npm** または **yarn**
+- **Snap Camera Kit API Token** - [Camera Kit管理画面](https://camera-kit.snapchat.com/)から取得
+- **Lens ID** - Lens Studioで公開したLensのID
+
 ## セットアップ
 
-### 必要な環境
-
-- Node.js (v14以上推奨)
-- npm または yarn
-
-### インストール
+### 1. 依存関係のインストール
 
 ```bash
 npm install
 ```
 
-### 開発サーバーの起動
+### 2. 設定ファイルの編集
+
+`src/settings.js` を開いて、以下を設定してください：
+
+- `apiToken` - Snap Camera KitのAPI Token
+- `lensID` - 使用するLensのID
+- `groupID` - LensのGroup ID
+
+### 3. 開発サーバーの起動
 
 ```bash
 npm run serve
@@ -56,7 +85,7 @@ npm run serve
 
 開発サーバーは `http://localhost:9000` で起動します。
 
-### ビルド
+### 4. ビルド（本番用）
 
 ```bash
 npm run build
@@ -64,117 +93,84 @@ npm run build
 
 ビルドされたファイルは `docs/` ディレクトリに出力されます。
 
-## 使用方法
-
-1. 開発サーバーを起動
-2. ブラウザで `http://localhost:9000` にアクセス
-3. カメラ・マイクの許可を求められたら許可
-4. AR STARTボタンをクリックしてAR体験を開始
-5. 撮影ボタンで写真撮影、長押しで動画録画
-
 ## プロジェクト構成
 
 ```
 SnapCamerakitForWebUI/
-├── docs/              # 公開用ファイル
+├── docs/              # ビルド後の公開用ファイル
 │   ├── assets/        # 画像・GIFファイル
-│   ├── *.html         # HTMLファイル
-│   ├── *.css          # スタイルシート
-│   └── *.js           # JavaScriptファイル
+│   ├── index.html     # メインHTMLファイル
+│   └── *.css, *.js    # スタイルシート・JavaScript
 ├── src/               # ソースコード
-│   ├── main.js        # メインエントリーポイント
-│   ├── remoteAPI.js   # Remote API実装（オプション）
-│   └── settings.js    # 設定ファイル（API Token、Lens ID等）
+│   ├── main.js        # メインエントリーポイント（Camera Kit初期化、撮影機能）
+│   ├── settings.js   # 設定ファイル（API Token、Lens ID等）★要編集
+│   └── remoteAPI.js   # Remote API実装（オプション）
 ├── webpack.config.js  # Webpack設定
 └── package.json       # 依存関係
 ```
 
-**ファイル説明：**
+**重要なファイル：**
 
-- `src/main.js` - Camera Kitの初期化、カメラ制御、撮影機能の実装
-- `src/settings.js` - API Token、Lens ID、Remote API設定など
-- `src/remoteAPI.js` - Remote APIの実装（マーカー検出時のリダイレクト機能など）
-  - `useRemoteAPI: true` の場合のみ使用されます
-  - マーカー検出イベントを処理し、指定URLにリダイレクトします
+- `src/settings.js` - **必ず編集が必要** - API TokenとLens IDを設定
+- `src/main.js` - Camera Kitの初期化、カメラ制御、撮影機能
+- `src/remoteAPI.js` - Remote API機能（`useRemoteAPI: true` の場合のみ使用）
 
-## 主要機能
+## 使用方法
 
-### ローディング画面
-- Camera Kitの初期化中に表示
-- カスタムGIFアニメーション
+1. **開発サーバーを起動**
+   ```bash
+   npm run serve
+   ```
 
-### モーダル画面
-- AR体験開始前の確認画面
-- カスタムデザインのボタン
+2. **ブラウザでアクセス**
+   - `http://localhost:9000` にアクセス
 
-### 撮影機能
-- **写真撮影**: タップで静止画をキャプチャ
-- **動画録画**: 長押し（0.3秒以上）で動画録画開始
-- **プレビュー**: 撮影後すぐにプレビュー表示
-- **シェア機能**: 撮影した写真・動画をシェア
+3. **権限の許可**
+   - カメラ・マイクの許可を求められたら「許可」をクリック
 
-### カメラ切り替え
-- フロントカメラ ↔ バックカメラの切り替え
+4. **AR体験を開始**
+   - 「AR START !!」ボタンをクリック
+
+5. **撮影・録画**
+   - **写真撮影**: 撮影ボタンをタップ
+   - **動画録画**: 撮影ボタンを長押し（0.3秒以上）
+   - **カメラ切り替え**: 右上のカメラ切り替えボタンをクリック
+
+6. **プレビュー・シェア**
+   - 撮影後、プレビュー画面で確認
+   - 「SHARE PHOTO」または「SHARE MOVIE」でシェア
 
 ## カスタマイズ
 
-### 初期設定（必須）
+### 必須設定
 
-`src/settings.js` を開いて、以下の値を設定してください：
-
-#### 1. API Tokenの設定
-
-Snap Camera Kit の管理画面（https://camera-kit.snapchat.com/）からAPI Tokenを取得して設定します。
+`src/settings.js` で以下を設定してください：
 
 ```javascript
-apiToken: "YOUR_API_TOKEN_HERE",
+apiToken: "YOUR_API_TOKEN_HERE",  // Camera Kit管理画面から取得
+lensID:  "YOUR_LENS_ID_HERE",     // Lens Studioで公開したLensのID
+groupID: "YOUR_GROUP_ID_HERE",    // LensのGroup ID
 ```
 
-#### 2. Lens IDの設定
+**取得方法：**
+- **API Token**: [Camera Kit管理画面](https://camera-kit.snapchat.com/)から取得
+- **Lens ID / Group ID**: Lens Studioで公開したLensの情報から取得
 
-使用したいLensのIDとGroup IDを設定します。Lens Studioで公開したLensのIDを取得してください。
+### Remote API（オプション）
 
-```javascript
-lensID:  "YOUR_LENS_ID_HERE",
-groupID: "YOUR_GROUP_ID_HERE",
-```
-
-#### 3. Remote APIの設定（オプション）
-
-Remote APIを使用する場合は、以下の設定を行います：
+マーカー検出時のリダイレクト機能を使用する場合：
 
 ```javascript
-// Remote API の Spec ID（Snapの管理画面から取得）
-remoteAPISpecId: "YOUR_REMOTE_API_SPEC_ID_HERE",
-
-// マーカー検出時のリダイレクト先URL
-redirectUrl: "https://example.com/",
-
-// Remote API を有効化
-useRemoteAPI: true,
+remoteAPISpecId: "YOUR_REMOTE_API_SPEC_ID_HERE",  // Snap管理画面から取得
+redirectUrl: "https://example.com/",              // リダイレクト先URL
+useRemoteAPI: true,                                // Remote APIを有効化
 ```
 
 **Remote APIについて：**
+- マーカー検出などのイベントをサーバー側で処理できます
+- マーカー検出時に指定URLにリダイレクトする機能が実装済み
+- 使用しない場合は `useRemoteAPI: false` のまま
 
-- Remote APIを使用すると、マーカー検出などのイベントをサーバー側で処理できます
-- `src/remoteAPI.js` にRemote APIの実装が含まれています
-- マーカー検出時に指定したURLにリダイレクトする機能が実装されています
-- 使用しない場合は `useRemoteAPI: false` に設定してください
-
-**設定例：**
-
-```javascript
-export const Settings = {
-  config: {
-    apiToken: "eyJhbGciOiJIUzI1NiIs...",  // 実際のトークン
-    lensID:  "205d7d5c-e0ba-4a3a-b39e-727bed44880d",
-    groupID: "7d12e244-25e7-4cdf-bd2d-5f6a47a19a6e",
-    remoteAPISpecId: "770201df-924a-4bf3-8099-146a93d9f07f",  // Remote API使用時のみ
-    redirectUrl: "https://example.com/",  // Remote API使用時のみ
-    useRemoteAPI: false,  // true にすると Remote API が有効化されます
-  },
-};
-```
 
 ## ブラウザ対応
 
@@ -190,38 +186,32 @@ ISC
 
 ## 注意事項
 
+⚠️ **必須設定**
+- `src/settings.js` の `apiToken`、`lensID`、`groupID` は**必ず実際の値に置き換えてください**
+- デフォルト値はダミー値のため、そのままでは動作しません
+
+🔒 **セキュリティ**
 - カメラ・マイクの許可が必要です
 - HTTPS環境またはlocalhostでのみ動作します
-- Snap Camera KitのAPI Tokenが必要です
-- `src/settings.js` のトークンやIDは実際の値に置き換えてください（デフォルトはダミー値です）
+
+📝 **その他**
 - Remote APIを使用する場合は、`useRemoteAPI: true` に設定し、`remoteAPISpecId` を設定してください
 
-## 開発者向け情報
+## トラブルシューティング
 
-### ビルド最適化
+### カメラが起動しない
+- ブラウザでカメラの許可を確認してください
+- HTTPS環境またはlocalhostで実行しているか確認してください
 
-本プロジェクトは本番環境用に最適化されています：
-- JavaScriptのminification
-- 不要なファイルの削除
-- 画像ファイルの最適化
+### Lensが表示されない
+- `src/settings.js` のAPI TokenとLens IDが正しく設定されているか確認してください
+- ブラウザのコンソールでエラーメッセージを確認してください
 
-### デバッグ
-
-開発モードで起動すると、詳細なログがコンソールに表示されます。
-
-```bash
-npm run start
-```
+### ビルドエラー
+- Node.jsのバージョンがv14以上であることを確認してください
+- `npm install` を再実行してください
 
 ## 貢献
 
 プルリクエストやイシューの報告を歓迎します。
-
-## 更新履歴
-
-### v1.0.0
-- 初回リリース
-- 基本的なAR体験機能
-- 写真撮影・動画録画機能
-- レスポンシブ対応
 
