@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title> AR Experience!! </title>
+  <meta name="description" content="AR Experience!!">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="./assets/favicon.png" type="image/png">
+  <link rel="shortcut icon" href="./assets/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="./assets/favicon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <link href="index.css" rel="stylesheet">
+  <link href="loading.css" rel="stylesheet">
+  <link href="capture.css" rel="stylesheet">
+  <link href="btn.css" rel="stylesheet">
+  <link href="count.css" rel="stylesheet">
+  <link href="modal.css" rel="stylesheet">
+
+  <script>
+    // グローバル変数は window オブジェクトに統一
+    window.session = null;
+    window.mediaStream = null;
+    window.liveRenderTarget = null;
+    window.movieBlob = null;
+  </script>
+  <script type="module" src="./packed.js"></script>
+</head>
+
+<body>
+  <!-- ローディング画面 -->
+  <div id="loading-screen" class="loading-screen">
+    <div class="loading-content">
+      <img src="./assets/loading.gif" alt="Loading..." class="loading-gif">
+    </div>
+  </div>
+
+  <!-- モーダル：音声許可（Camera Kit初期化後に表示） -->
+  <div id="audio-modal" class="audio-modal hidden">
+    <div class="audio-modal-content">
+      <div style="margin-bottom: 30px;">
+        <img src="./assets/modal.gif" alt="Modal" class="modal-gif">
+      </div>
+      <div>
+        <button id="start-experience-btn" class="start-btn">AR START !!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- キャプチャー -->
+  <div class="capture-btn-wrapper">
+    <button id="capture-btn">
+      <div class="capture-btn-inner-wrapper">
+        <span class="capture-btn-inner"></span>
+      </div>
+    </button>
+    <button id="stop-btn"></button>
+  </div>
+
+  <!-- カメラ切り替え -->
+  <div class="camera-switcher-btn-wrapper">
+    <button id="camera-switcher"><span class="camera-switcher-inner"></span></button>
+  </div>
+
+  <canvas id="canvas"></canvas>
+  <video id="video" style="display:none;" autoplay playsinline></video>
+
+  <!-- 静止画 -->
+  <div id="camera-container"><div id="camera-output"></div></div>
+  <img id="captured-image" alt="Captured Image">
+
+  <!-- プレビュー系 -->
+  <div class="pic-preview-btn-wrapper">
+    <button id="pic-preview-back-btn"></button>
+    <button id="pic-preview-share-btn">SHARE PHOTO</button>
+    <button style="visibility:hidden;"></button>
+  </div>
+
+  <div class="movie-preview-btn-wrapper">
+    <button id="movie-preview-back-btn"></button>
+    <button id="movie-preview-share-btn">SHARE MOVIE</button>
+    <button style="visibility:hidden;"></button>
+  </div>
+
+  <!-- カウント -->
+  <div class="movie-record-cnt-wrapper">
+    <span class="movie-record-cnt">00:00</span>
+  </div>
+
+  <script src="./share.js"></script>
+  <script src="./btn.js"></script>
+  <script src="./count.js"></script>
+  <script src="./view.js"></script>
+</body>
+</html>

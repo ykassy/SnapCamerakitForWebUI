@@ -1,0 +1,67 @@
+#captured-image {
+    display: none;
+    pointer-events: none; /* 非表示時はタップを通過させる */
+}
+
+#captured-image.preview {
+    position: fixed;
+    top: 45%; /* 縦向き：少し上に配置 */
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background: #000;
+    border-radius: 30px;
+    z-index: 2;
+    max-width: 85vw;
+    max-height: 70vh; /* ボタンの領域を確保 */
+    width: auto;
+    height: auto;
+    object-fit: contain; /* アスペクト比を保ちつつ画面内に収める */
+    display: block;
+    pointer-events: none; /* プレビュー時もタップを通過させる（画像自体はインタラクティブでない） */
+    border: 8px solid #000;
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.8),
+        0 10px 30px rgba(0, 0, 0, 0.6),
+        inset 0 -3px 8px rgba(0, 0, 0, 0.9),
+        inset 0 3px 8px rgba(255, 255, 255, 0.1);
+}
+
+/* 横向き時のプレビュー調整 */
+@media (orientation: landscape) {
+  #captured-image.preview {
+    top: 42%;
+    max-width: 45vw;
+    max-height: 55vh;
+  }
+}
+
+/* 動画プレビュー */
+#video {
+    position: fixed;
+    top: 47%; /* 縦向き：少し上に配置 */
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background: #000;
+    border-radius: 30px;
+    z-index: 2;
+    max-width: 85vw;
+    max-height: 70vh; /* ボタンの領域を確保 */
+    width: auto;
+    height: auto;
+    object-fit: contain; /* アスペクト比を保ちつつ画面内に収める */
+    border: 8px solid #000;
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.8),
+        0 10px 30px rgba(0, 0, 0, 0.6),
+        inset 0 -3px 8px rgba(0, 0, 0, 0.9),
+        inset 0 3px 8px rgba(255, 255, 255, 0.1);
+}
+
+/* 横向き時の動画プレビュー調整 */
+@media (orientation: landscape) {
+  #video {
+    top: 44%;
+    max-width: 45vw;
+    max-height: 55vh;
+  }
+}

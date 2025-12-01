@@ -1,0 +1,41 @@
+.movie-record-cnt-wrapper {
+    position: fixed;
+    top: 3%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: none;
+    pointer-events: none; /* タップを通過させる */
+    z-index: 300; /* UIボタンより前面に表示 */
+}
+
+.movie-record-cnt-wrapper.now-recording {
+    display: block;
+}
+
+.movie-record-cnt {
+    font-size: 50px;
+    background: linear-gradient(145deg, #2a2a2a 0%, #1a1a1a 50%, #0a0a0a 100%);
+    color: #FFF;
+    padding: 10px 25px;
+    border-radius: 20px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    box-shadow: 
+        0 8px 20px rgba(0, 0, 0, 0.6),
+        0 2px 4px rgba(0, 0, 0, 0.4),
+        inset 0 -2px 6px rgba(0, 0, 0, 0.8),
+        inset 0 2px 6px rgba(255, 255, 255, 0.15);
+}
+
+/* 横向き時のカウンター調整 */
+@media (orientation: landscape) {
+    .movie-record-cnt-wrapper {
+        top: 2%;
+    }
+    
+    .movie-record-cnt {
+        font-size: 36px;
+        padding: 8px 20px;
+        letter-spacing: 1.5px;
+    }
+}

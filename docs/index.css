@@ -1,0 +1,187 @@
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  height: 95vh;
+  width: 100%;
+  background-color: #000; /* 背景を黒にして隙間を隠す */
+  -webkit-tap-highlight-color: transparent; /* Android/iOSのタップハイライトを無効化 */
+}
+
+body * {
+  font-family: "Inter", sans-serif;
+}
+
+body.now-review {
+  position: relative;
+}
+
+body.now-review::after {
+  position: fixed;
+  content: "";
+  display: block;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  pointer-events: none; /* 背景オーバーレイはタップを通過させる */
+}
+
+*:focus {
+  outline: none;
+}
+
+/* Android/iOSのタップ時のハイライトを完全に無効化 */
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#output-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* タップを通過させる */
+}
+
+#canvas {
+  width: auto;
+  height: 95vh;
+  aspect-ratio: 9 / 16;
+  /* 縦長アスペクト比を固定 */
+  max-width: 100%;
+  /* 画面幅を超えないように調整 */
+  display: block;
+  margin: 0 auto;
+  /* 中央配置 */
+}
+
+#canvas,
+#video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* width: 100%;
+  height: auto; */
+}
+
+#video {
+  z-index: 2;
+  border-radius: 30px;
+  top: 45%; /* 縦向き：少し上に配置 */
+  max-width: 85vw;
+  max-height: 70vh; /* ボタンの領域を確保 */
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+  pointer-events: none; /* 非表示時はタップを通過させる */
+}
+
+/* 横向き時の動画プレビュー調整 */
+@media (orientation: landscape) {
+  #video {
+    top: 37%;
+    max-width: 50vw;
+    max-height: 60vh;
+  }
+}
+
+.button-class {
+  z-index: 999;
+  position: absolute;
+
+  height: 50px;
+  width: 100px;
+  font-size: 1.5em;
+  pointer-events: auto; /* ボタンはタップ可能にする */
+}
+
+.select-menu {
+  position: absolute;
+  top: 20px;
+  z-index: 100;
+  height: 50px;
+  pointer-events: auto; /* メニューはタップ可能にする */
+}
+
+.select-menu>select {
+  max-width: 200px;
+  height: 100%;
+  font-size: 1.5em;
+}
+
+.flamingo-logo {
+  width: 100%;
+  position: absolute;
+  top: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none; /* ロゴ領域はタップを通過させる */
+}
+
+.flamingo-logo>img {
+  width: 300px;
+}
+
+.poweredbysnap-logo {
+  /* width: 100%; */
+  position: absolute;
+  bottom: 30px;
+  left: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  pointer-events: none; /* ロゴ領域はタップを通過させる */
+}
+
+.poweredbysnap-logo>img {
+  width: 200px;
+}
+
+#canvas {
+  width: 1080px !important;
+  height: auto !important;
+  pointer-events: auto !important;
+  z-index: 1 !important;
+  opacity: 0; /* 最初は非表示 */
+  transition: opacity 0.3s ease-in; /* フェードイン効果 */
+}
+
+#canvas.visible {
+  opacity: 1; /* AR START時に表示 */
+}
+
+/* 横向き時の対応 */
+@media (orientation: landscape) {
+  #canvas {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    object-fit: contain !important; /* Canvas自体が16:9なので余白が少なくなる */
+  }
+}
+
+#camera-container,
+#camera-output {
+  pointer-events: none; /* カメラコンテナはタップを通過させる */
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+
