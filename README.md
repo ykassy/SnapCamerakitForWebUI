@@ -66,11 +66,19 @@ SnapCamerakitForWebUI/
 │   └── *.js           # JavaScriptファイル
 ├── src/               # ソースコード
 │   ├── main.js        # メインエントリーポイント
-│   ├── remoteAPI.js   # Remote API設定
-│   └── settings.js    # 設定ファイル
+│   ├── remoteAPI.js   # Remote API実装（オプション）
+│   └── settings.js    # 設定ファイル（API Token、Lens ID等）
 ├── webpack.config.js  # Webpack設定
 └── package.json       # 依存関係
 ```
+
+**ファイル説明：**
+
+- `src/main.js` - Camera Kitの初期化、カメラ制御、撮影機能の実装
+- `src/settings.js` - API Token、Lens ID、Remote API設定など
+- `src/remoteAPI.js` - Remote APIの実装（マーカー検出時のリダイレクト機能など）
+  - `useRemoteAPI: true` の場合のみ使用されます
+  - マーカー検出イベントを処理し、指定URLにリダイレクトします
 
 ## 主要機能
 
@@ -93,20 +101,63 @@ SnapCamerakitForWebUI/
 
 ## カスタマイズ
 
-### Lensの変更
+### 初期設定（必須）
 
-`src/settings.js` または `src/main.js` でLens IDを変更できます。
+`src/settings.js` を開いて、以下の値を設定してください：
+
+#### 1. API Tokenの設定
+
+Snap Camera Kit の管理画面（https://camera-kit.snapchat.com/）からAPI Tokenを取得して設定します。
 
 ```javascript
-const lensById = await cameraKit.lensRepository.loadLens(
-  'YOUR_LENS_ID',
-  'YOUR_GROUP_ID'
-);
+apiToken: "YOUR_API_TOKEN_HERE",
 ```
 
-### API Tokenの設定
+#### 2. Lens IDの設定
 
-`src/settings.js` でSnap Camera KitのAPI Tokenを設定してください。
+使用したいLensのIDとGroup IDを設定します。Lens Studioで公開したLensのIDを取得してください。
+
+```javascript
+lensID:  "YOUR_LENS_ID_HERE",
+groupID: "YOUR_GROUP_ID_HERE",
+```
+
+#### 3. Remote APIの設定（オプション）
+
+Remote APIを使用する場合は、以下の設定を行います：
+
+```javascript
+// Remote API の Spec ID（Snapの管理画面から取得）
+remoteAPISpecId: "YOUR_REMOTE_API_SPEC_ID_HERE",
+
+// マーカー検出時のリダイレクト先URL
+redirectUrl: "https://example.com/",
+
+// Remote API を有効化
+useRemoteAPI: true,
+```
+
+**Remote APIについて：**
+
+- Remote APIを使用すると、マーカー検出などのイベントをサーバー側で処理できます
+- `src/remoteAPI.js` にRemote APIの実装が含まれています
+- マーカー検出時に指定したURLにリダイレクトする機能が実装されています
+- 使用しない場合は `useRemoteAPI: false` に設定してください
+
+**設定例：**
+
+```javascript
+export const Settings = {
+  config: {
+    apiToken: "eyJhbGciOiJIUzI1NiIs...",  // 実際のトークン
+    lensID:  "205d7d5c-e0ba-4a3a-b39e-727bed44880d",
+    groupID: "7d12e244-25e7-4cdf-bd2d-5f6a47a19a6e",
+    remoteAPISpecId: "770201df-924a-4bf3-8099-146a93d9f07f",  // Remote API使用時のみ
+    redirectUrl: "https://example.com/",  // Remote API使用時のみ
+    useRemoteAPI: false,  // true にすると Remote API が有効化されます
+  },
+};
+```
 
 ## ブラウザ対応
 
@@ -125,6 +176,8 @@ ISC
 - カメラ・マイクの許可が必要です
 - HTTPS環境またはlocalhostでのみ動作します
 - Snap Camera KitのAPI Tokenが必要です
+- `src/settings.js` のトークンやIDは実際の値に置き換えてください（デフォルトはダミー値です）
+- Remote APIを使用する場合は、`useRemoteAPI: true` に設定し、`remoteAPISpecId` を設定してください
 
 ## 開発者向け情報
 
