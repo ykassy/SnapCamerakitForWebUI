@@ -52,7 +52,12 @@ Snap Camera Kit for Webを使用したAR体験アプリケーションです。�
    npm install
    ```
 
-3. **設定ファイルを編集** ⚠️ **必須**
+3. **設定ファイルを作成・編集** ⚠️ **必須**
+   
+   まず、テンプレートファイルをコピーして設定ファイルを作成します：
+   ```bash
+   cp src/settings.js.example src/settings.js
+   ```
    
    `src/settings.js` を開いて、以下を設定してください：
    ```javascript
