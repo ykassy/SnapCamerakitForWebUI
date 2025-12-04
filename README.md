@@ -232,7 +232,6 @@ ISC
 - カメラチェンジボタンが効かないバグを修正
   - `.camera-switcher-btn-wrapper.active`に`pointer-events: auto`を追加
   - カメラ切り替え処理のエラーハンドリングを改善
-  - 開発サーバーのポートを9002に変更
 
 ## 貢献
 
