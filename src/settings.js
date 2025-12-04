@@ -35,4 +35,3 @@ export const Settings = {
     recordLensAudio: true,  // MP4音声を有効化
   },
 };
-
